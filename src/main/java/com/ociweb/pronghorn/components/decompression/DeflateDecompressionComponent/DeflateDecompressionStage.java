@@ -50,6 +50,13 @@ public class DeflateDecompressionStage extends PronghornStage {
             }
 
             if(length < 0) {
+                //Position pill is still on the ring buffer and must be removed.
+                if (RingBuffer.contentRemaining(inputBuffer)==RingBuffer.EOF_SIZE) {
+                    int eofMsg = RingBuffer.takeMsgIdx(inputBuffer);
+                    int eofLen = RingBuffer.takeValue(inputBuffer);
+                    RingBuffer.releaseReads(inputBuffer);
+                }
+                
                 requestShutdown();
             }
 		}

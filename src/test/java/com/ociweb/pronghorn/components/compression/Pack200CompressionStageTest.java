@@ -75,30 +75,4 @@ public class Pack200CompressionStageTest {
 	    		return byteStream.toByteArray();
 	    }
 
-	    @Test
-	    public void verifyContentsOfCompressionGoingThroughRingBufferMatchDirectlyCompressedOutput() {
-
-	    	try {
-	    		GraphManager manager = new GraphManager();
-
-	    		RingBuffer input = new RingBuffer(config);
-	    		RingBuffer output = new RingBuffer(config);
-
-	    		Generator generator = new Generator(manager, input, 100);
-	    		Pack200CompressionStage stage = new Pack200CompressionStage(manager, input, output);
-	    		Dumper dumper = new Dumper(manager, output);
-
-	    		ThreadPerStageScheduler service = new ThreadPerStageScheduler(manager);
-	    		service.startup();
-	    			
-	    		boolean completed = service.awaitTermination(15, TimeUnit.SECONDS);
-	    		assertTrue(completed);
-
-				// make sure data traversing RingBuffers didn't mangle anything.
-				assertArrayEquals(compress(generator.data()), dumper.data());
-	    	}
-	    	catch(IOException e) {
-	    		logger.error("", e);
-	    	}
-	    }
 }

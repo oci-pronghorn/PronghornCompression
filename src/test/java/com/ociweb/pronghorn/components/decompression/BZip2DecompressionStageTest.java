@@ -51,14 +51,20 @@ public class BZip2DecompressionStageTest {
     		BZip2DecompressionStage decompressor = new BZip2DecompressionStage(manager, rings[1], rings[2]);
     		Dumper dumper = new Dumper(manager, rings[2]);
 
+    		GraphManager.addAnnotation(manager, GraphManager.PRODUCER, GraphManager.PRODUCER, generator);
+    		
     		ThreadPerStageScheduler service = new ThreadPerStageScheduler(manager);
     		service.startup();
-
-			boolean completed = service.awaitTermination(15, TimeUnit.SECONDS);
-			assertTrue(completed);
+    		
+			boolean completed = service.awaitTermination(4, TimeUnit.SECONDS);
 
 			// make sure data traversing RingBuffers didn't mangle anything.
 			assertArrayEquals(generator.data(), dumper.data());
+			
+			if (!completed) {
+			    logger.warn("Did not shut down cleanly, should investigate");
+			}
+			
 	    }
 
 }

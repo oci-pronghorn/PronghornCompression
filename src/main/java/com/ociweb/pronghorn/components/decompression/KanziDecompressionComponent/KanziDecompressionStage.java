@@ -46,14 +46,22 @@ public class KanziDecompressionStage extends PronghornStage {
 	public void run() {
 		
 		try {
+		 //   System.out.println("reading");
             int length = input.read(data);
+           // System.out.println("read "+length);
             
             while(length > 0) {
                 output.write(data, 0, length);
                 length = input.read(data);
             }
 
-            if(length < 0) {
+            if(length < 0) {  
+                //Position pill is still on the ring buffer and must be removed.
+                if (RingBuffer.contentRemaining(inputBuffer)==RingBuffer.EOF_SIZE) {
+                    int eofMsg = RingBuffer.takeMsgIdx(inputBuffer);
+                    int eofLen = RingBuffer.takeValue(inputBuffer);
+                    RingBuffer.releaseReads(inputBuffer);
+                }
                 requestShutdown();
             }
 		}

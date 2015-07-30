@@ -92,10 +92,13 @@ public class BZip2CompressionStageTest {
 	    		ThreadPerStageScheduler service = new ThreadPerStageScheduler(manager);
 	    		service.startup();
 	    			
-	    		boolean completed = service.awaitTermination(15, TimeUnit.SECONDS);
-	    		assertTrue(completed);
+	    		boolean completed = service.awaitTermination(2, TimeUnit.SECONDS);
 
 	    		assertArrayEquals(compress(generator.data()), dumper.data());
+	    		
+	    		assertTrue(completed);
+	    		
+	    		
 	    	}
 	    	catch(IOException e) {
 	    		logger.error("", e);
