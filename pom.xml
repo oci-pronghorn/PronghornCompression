@@ -24,10 +24,12 @@
 	      <artifactId>commons-compress</artifactId>
 	      <version>1.9</version>
 		</dependency>
-		 <dependency>
+		 <dependency> 
             <groupId>com.google.code</groupId>
             <artifactId>Kanzi</artifactId>
             <version>0.0.1-SNAPSHOT</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/src/main/resources/kanzi.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>net.jpountz.lz4</groupId>
