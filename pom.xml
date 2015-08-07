@@ -62,7 +62,7 @@
 	           <version>3.2</version>
 	           <configuration>
 	               <source>1.7</source>
-	               <target>1.7</target>
+	               <target>1.8</target>
 	               <encoding>UTF-8</encoding>
 	           </configuration>
             </plugin>
@@ -93,6 +93,7 @@
 
     </build>
   
+  <!-- TODO: add a usage of pro-guard to catch any time this class picks up any reflective dependencies -->
   	
   <repositories>
     <repository>
