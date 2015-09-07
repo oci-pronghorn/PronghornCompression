@@ -3,9 +3,9 @@ package com.ociweb.pronghorn.components.compression.KanziCompressionComponent;
 import java.io.IOException;
 import java.lang.RuntimeException;
 
-import com.ociweb.pronghorn.ring.RingBuffer;
-import com.ociweb.pronghorn.ring.stream.RingInputStream;
-import com.ociweb.pronghorn.ring.stream.RingOutputStream;
+import com.ociweb.pronghorn.pipe.Pipe;
+import com.ociweb.pronghorn.pipe.stream.RingInputStream;
+import com.ociweb.pronghorn.pipe.stream.RingOutputStream;
 import com.ociweb.pronghorn.stage.PronghornStage;
 import com.ociweb.pronghorn.stage.scheduling.GraphManager;
 
@@ -27,10 +27,10 @@ import org.slf4j.LoggerFactory;
 // and will be disallowed: BWT+RANK, NONE+SNAPPY
 public class KanziCompressionStage extends PronghornStage {
 
-    private RingBuffer inputBuffer;
+    private Pipe inputBuffer;
     private RingInputStream input;
 
-    private RingBuffer outputBuffer;
+    private Pipe outputBuffer;
     private CompressedOutputStream output;
     private final byte[] data = new byte[4096];
     
@@ -39,7 +39,7 @@ public class KanziCompressionStage extends PronghornStage {
 
     private final Logger logger = LoggerFactory.getLogger(KanziCompressionStage.class);
 
-    public KanziCompressionStage(GraphManager manager, RingBuffer inputRing, RingBuffer outputRing, String codec, String transform) {
+    public KanziCompressionStage(GraphManager manager, Pipe inputRing, Pipe outputRing, String codec, String transform) {
         super(manager, inputRing, outputRing);
 
     	this.inputBuffer = inputRing;

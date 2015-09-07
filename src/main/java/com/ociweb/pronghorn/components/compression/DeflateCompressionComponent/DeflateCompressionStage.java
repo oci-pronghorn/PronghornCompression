@@ -2,9 +2,9 @@ package com.ociweb.pronghorn.components.compression.DeflateCompressionComponent;
 
 import java.io.IOException;
 
-import com.ociweb.pronghorn.ring.RingBuffer;
-import com.ociweb.pronghorn.ring.stream.RingInputStream;
-import com.ociweb.pronghorn.ring.stream.RingOutputStream;
+import com.ociweb.pronghorn.pipe.Pipe;
+import com.ociweb.pronghorn.pipe.stream.RingInputStream;
+import com.ociweb.pronghorn.pipe.stream.RingOutputStream;
 import com.ociweb.pronghorn.stage.PronghornStage;
 import com.ociweb.pronghorn.stage.scheduling.GraphManager;
 
@@ -17,10 +17,10 @@ import org.slf4j.LoggerFactory;
 
 public class DeflateCompressionStage extends PronghornStage {
 
-    private RingBuffer inputBuffer; 
+    private Pipe inputBuffer; 
     private RingInputStream input;
 
-    private RingBuffer outputBuffer;
+    private Pipe outputBuffer;
     private DeflateCompressorOutputStream output;
 
     private int compressionLevel;
@@ -28,11 +28,11 @@ public class DeflateCompressionStage extends PronghornStage {
 
     private final Logger logger = LoggerFactory.getLogger(DeflateCompressionStage.class);
 
-    public DeflateCompressionStage(GraphManager manager, RingBuffer inputRing, RingBuffer outputRing) {
+    public DeflateCompressionStage(GraphManager manager, Pipe inputRing, Pipe outputRing) {
     	this(manager, inputRing, outputRing, 1);
     }
 
-	public DeflateCompressionStage(GraphManager manager, RingBuffer inputRing, RingBuffer outputRing, int compressionLevelIn) {
+	public DeflateCompressionStage(GraphManager manager, Pipe inputRing, Pipe outputRing, int compressionLevelIn) {
         
 		super(manager, inputRing, outputRing);
 		

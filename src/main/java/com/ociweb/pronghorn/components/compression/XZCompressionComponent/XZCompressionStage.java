@@ -7,18 +7,18 @@ import org.apache.commons.compress.compressors.xz.XZCompressorOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ociweb.pronghorn.ring.RingBuffer;
-import com.ociweb.pronghorn.ring.stream.RingInputStream;
-import com.ociweb.pronghorn.ring.stream.RingOutputStream;
+import com.ociweb.pronghorn.pipe.Pipe;
+import com.ociweb.pronghorn.pipe.stream.RingInputStream;
+import com.ociweb.pronghorn.pipe.stream.RingOutputStream;
 import com.ociweb.pronghorn.stage.PronghornStage;
 import com.ociweb.pronghorn.stage.scheduling.GraphManager;
 
 public class XZCompressionStage extends PronghornStage {
 
-    private RingBuffer inputBuffer; 
+    private Pipe inputBuffer; 
     private RingInputStream input;
 
-    private RingBuffer outputBuffer;
+    private Pipe outputBuffer;
     private XZCompressorOutputStream output;
 
     private final byte[] data = new byte[4096];
@@ -27,7 +27,7 @@ public class XZCompressionStage extends PronghornStage {
     private final Logger logger = LoggerFactory.getLogger(XZCompressionStage.class);
 
 
-    public XZCompressionStage(GraphManager manager, RingBuffer inputRing, RingBuffer outputRing) {
+    public XZCompressionStage(GraphManager manager, Pipe inputRing, Pipe outputRing) {
         this(manager, inputRing, outputRing, 0);
     }
 
@@ -40,7 +40,7 @@ public class XZCompressionStage extends PronghornStage {
 		dictionaries and have higher compressor and decompressor memory requirements. 
 		Unless the uncompressed size of the file exceeds 8 MiB, 16 MiB, or 32 MiB, it is waste of memory to use the presets 7, 8, or 9, respectively.
      */
-	public XZCompressionStage(GraphManager manager, RingBuffer inputRing, RingBuffer outputRing, int compressionLevelIn) {
+	public XZCompressionStage(GraphManager manager, Pipe inputRing, Pipe outputRing, int compressionLevelIn) {
         super(manager, inputRing, outputRing);
 
 		this.inputBuffer = inputRing;

@@ -2,9 +2,9 @@ package com.ociweb.pronghorn.components.decompression.KanziDecompressionComponen
 
 import java.io.IOException;
 
-import com.ociweb.pronghorn.ring.RingBuffer;
-import com.ociweb.pronghorn.ring.stream.RingInputStream;
-import com.ociweb.pronghorn.ring.stream.RingOutputStream;
+import com.ociweb.pronghorn.pipe.Pipe;
+import com.ociweb.pronghorn.pipe.stream.RingInputStream;
+import com.ociweb.pronghorn.pipe.stream.RingOutputStream;
 import com.ociweb.pronghorn.stage.PronghornStage;
 import com.ociweb.pronghorn.stage.scheduling.GraphManager;
 
@@ -18,17 +18,17 @@ import org.slf4j.LoggerFactory;
 // the KanziCompressionStage (any combination of codec & transform are supported)
 public class KanziDecompressionStage extends PronghornStage {
 
-    private RingBuffer inputBuffer; 
+    private Pipe inputBuffer; 
     private CompressedInputStream input;
 
-    private RingBuffer outputBuffer;
+    private Pipe outputBuffer;
     private RingOutputStream output;
     private final byte[] data = new byte[4096];
 
     private final Logger logger = LoggerFactory.getLogger(KanziDecompressionStage.class);
 
 
-    public KanziDecompressionStage(GraphManager manager, RingBuffer inputRing, RingBuffer outputRing) {
+    public KanziDecompressionStage(GraphManager manager, Pipe inputRing, Pipe outputRing) {
         super(manager, inputRing, outputRing);
 
 		this.inputBuffer = inputRing;
@@ -57,10 +57,10 @@ public class KanziDecompressionStage extends PronghornStage {
 
             if(length < 0) {  
                 //Position pill is still on the ring buffer and must be removed.
-                if (RingBuffer.contentRemaining(inputBuffer)==RingBuffer.EOF_SIZE) {
-                    int eofMsg = RingBuffer.takeMsgIdx(inputBuffer);
-                    int eofLen = RingBuffer.takeValue(inputBuffer);
-                    RingBuffer.releaseReads(inputBuffer);
+                if (Pipe.contentRemaining(inputBuffer)==Pipe.EOF_SIZE) {
+                    int eofMsg = Pipe.takeMsgIdx(inputBuffer);
+                    int eofLen = Pipe.takeValue(inputBuffer);
+                    Pipe.releaseReads(inputBuffer);
                 }
                 requestShutdown();
             }

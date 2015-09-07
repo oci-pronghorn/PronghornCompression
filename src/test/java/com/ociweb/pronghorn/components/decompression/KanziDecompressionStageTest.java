@@ -14,9 +14,9 @@ import com.ociweb.pronghorn.components.compression.KanziCompressionComponent.Kan
 import com.ociweb.pronghorn.components.decompression.KanziDecompressionComponent.KanziDecompressionStage;
 import com.ociweb.pronghorn.components.utilities.TestingComponent.Dumper;
 import com.ociweb.pronghorn.components.utilities.TestingComponent.Generator;
-import com.ociweb.pronghorn.ring.FieldReferenceOffsetManager;
-import com.ociweb.pronghorn.ring.RingBuffer;
-import com.ociweb.pronghorn.ring.RingBufferConfig;
+import com.ociweb.pronghorn.pipe.FieldReferenceOffsetManager;
+import com.ociweb.pronghorn.pipe.Pipe;
+import com.ociweb.pronghorn.pipe.PipeConfig;
 import com.ociweb.pronghorn.stage.scheduling.GraphManager;
 import com.ociweb.pronghorn.stage.scheduling.ThreadPerStageScheduler;
 
@@ -26,15 +26,15 @@ public class KanziDecompressionStageTest {
         private final String transforms[] = new String[] {"BWT", "BWTS", "SNAPPY", "LZ4", "RLT", "BWT+MTF", "BWT+TIMESTAMP", "NONE"};
 
 		private final Logger logger = LoggerFactory.getLogger(KanziDecompressionStageTest.class);
-		private final RingBufferConfig config = new RingBufferConfig(FieldReferenceOffsetManager.RAW_BYTES, 20, 4096);
+		private final PipeConfig config = new PipeConfig(FieldReferenceOffsetManager.RAW_BYTES, 20, 4096);
 
 	    @Test
 	    public void verifyInstantiation() {
 	        
 	        GraphManager manager = new GraphManager();
 
-    		RingBuffer input = new RingBuffer(config);
-    		RingBuffer output = new RingBuffer(config);
+    		Pipe input = new Pipe(config);
+    		Pipe output = new Pipe(config);
 	        	
        		KanziDecompressionStage stage = new KanziDecompressionStage(manager, input, output);
 	    }
@@ -57,10 +57,10 @@ public class KanziDecompressionStageTest {
 
 	    	GraphManager manager = new GraphManager();
 
-    		RingBuffer[] rings = new RingBuffer[] { 
-    			  new RingBuffer(config)	// input to compression stage
-    			, new RingBuffer(config)	// output for compression stage, input for decompression stage
-    			, new RingBuffer(config) 	// output for decompression stage, input for dumper.
+    		Pipe[] rings = new Pipe[] { 
+    			  new Pipe(config)	// input to compression stage
+    			, new Pipe(config)	// output for compression stage, input for decompression stage
+    			, new Pipe(config) 	// output for decompression stage, input for dumper.
     		};
 
 

@@ -8,14 +8,14 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ociweb.pronghorn.ring.RingBuffer;
-import com.ociweb.pronghorn.ring.stream.RingOutputStream;
+import com.ociweb.pronghorn.pipe.Pipe;
+import com.ociweb.pronghorn.pipe.stream.RingOutputStream;
 import com.ociweb.pronghorn.stage.PronghornStage;
 import com.ociweb.pronghorn.stage.scheduling.GraphManager;
 
 public class Generator extends PronghornStage {
 
-	private RingBuffer outputBuffer;
+	private Pipe outputBuffer;
 	private RingOutputStream outputStream; 
 	private List<byte[]> bytes = new LinkedList<byte[]>();
 
@@ -25,7 +25,7 @@ public class Generator extends PronghornStage {
     private final Logger logger = LoggerFactory.getLogger(Generator.class);
     
 
-	public Generator(GraphManager manager, RingBuffer outputBuffer, int maxArrayCount) {
+	public Generator(GraphManager manager, Pipe outputBuffer, int maxArrayCount) {
 		super(manager, NONE, outputBuffer);
 
 		this.outputBuffer = outputBuffer;

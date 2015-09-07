@@ -2,9 +2,9 @@ package com.ociweb.pronghorn.components.compression.BZip2CompressionComponent;
 
 import java.io.IOException;
 
-import com.ociweb.pronghorn.ring.RingBuffer;
-import com.ociweb.pronghorn.ring.stream.RingInputStream;
-import com.ociweb.pronghorn.ring.stream.RingOutputStream;
+import com.ociweb.pronghorn.pipe.Pipe;
+import com.ociweb.pronghorn.pipe.stream.RingInputStream;
+import com.ociweb.pronghorn.pipe.stream.RingOutputStream;
 import com.ociweb.pronghorn.stage.PronghornStage;
 import com.ociweb.pronghorn.stage.scheduling.GraphManager;
 
@@ -16,10 +16,10 @@ import org.slf4j.LoggerFactory;
 
 public class BZip2CompressionStage extends PronghornStage {
 
-    private RingBuffer inputBuffer;
+    private Pipe inputBuffer;
     private RingInputStream input;
     
-    private RingBuffer outputBuffer;
+    private Pipe outputBuffer;
     private RingOutputStream outputStream;
     private BZip2CompressorOutputStream output;
     
@@ -29,11 +29,11 @@ public class BZip2CompressionStage extends PronghornStage {
     private final Logger logger = LoggerFactory.getLogger(BZip2CompressionStage.class);
 
 
-    public BZip2CompressionStage(GraphManager manager, RingBuffer inputBuffer, RingBuffer outputBuffer) {
+    public BZip2CompressionStage(GraphManager manager, Pipe inputBuffer, Pipe outputBuffer) {
     	this(manager, inputBuffer, outputBuffer, 9);
     }
 
-	public BZip2CompressionStage(GraphManager manager, RingBuffer inputRing, RingBuffer outputRing, int blockSizeIn) {
+	public BZip2CompressionStage(GraphManager manager, Pipe inputRing, Pipe outputRing, int blockSizeIn) {
         super(manager, inputRing, outputRing);
 
 		this.inputBuffer = inputRing;

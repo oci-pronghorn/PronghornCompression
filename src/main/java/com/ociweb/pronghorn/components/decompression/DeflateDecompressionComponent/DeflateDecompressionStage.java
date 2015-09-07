@@ -7,24 +7,24 @@ import org.apache.commons.compress.compressors.deflate.DeflateCompressorInputStr
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ociweb.pronghorn.ring.RingBuffer;
-import com.ociweb.pronghorn.ring.stream.RingInputStream;
-import com.ociweb.pronghorn.ring.stream.RingOutputStream;
+import com.ociweb.pronghorn.pipe.Pipe;
+import com.ociweb.pronghorn.pipe.stream.RingInputStream;
+import com.ociweb.pronghorn.pipe.stream.RingOutputStream;
 import com.ociweb.pronghorn.stage.PronghornStage;
 import com.ociweb.pronghorn.stage.scheduling.GraphManager;
 
 public class DeflateDecompressionStage extends PronghornStage {
 
-    private RingBuffer inputBuffer; 
+    private Pipe inputBuffer; 
     private DeflateCompressorInputStream input;
 
-    private RingBuffer outputBuffer;
+    private Pipe outputBuffer;
     private RingOutputStream output;
     private final byte[] data = new byte[4096];
 
     private final Logger logger = LoggerFactory.getLogger(DeflateDecompressionStage.class);
 
-    public DeflateDecompressionStage(GraphManager manager, RingBuffer inputRing, RingBuffer outputRing) {
+    public DeflateDecompressionStage(GraphManager manager, Pipe inputRing, Pipe outputRing) {
 		super(manager, inputRing, outputRing);
 
         this.inputBuffer = inputRing;
@@ -51,10 +51,10 @@ public class DeflateDecompressionStage extends PronghornStage {
 
             if(length < 0) {
                 //Position pill is still on the ring buffer and must be removed.
-                if (RingBuffer.contentRemaining(inputBuffer)==RingBuffer.EOF_SIZE) {
-                    int eofMsg = RingBuffer.takeMsgIdx(inputBuffer);
-                    int eofLen = RingBuffer.takeValue(inputBuffer);
-                    RingBuffer.releaseReads(inputBuffer);
+                if (Pipe.contentRemaining(inputBuffer)==Pipe.EOF_SIZE) {
+                    int eofMsg = Pipe.takeMsgIdx(inputBuffer);
+                    int eofLen = Pipe.takeValue(inputBuffer);
+                    Pipe.releaseReads(inputBuffer);
                 }
                 
                 requestShutdown();

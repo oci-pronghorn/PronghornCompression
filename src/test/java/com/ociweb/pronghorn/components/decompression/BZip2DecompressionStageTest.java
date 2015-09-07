@@ -13,24 +13,24 @@ import com.ociweb.pronghorn.components.compression.BZip2CompressionComponent.BZi
 import com.ociweb.pronghorn.components.decompression.BZip2DecompressionComponent.BZip2DecompressionStage;
 import com.ociweb.pronghorn.components.utilities.TestingComponent.Dumper;
 import com.ociweb.pronghorn.components.utilities.TestingComponent.Generator;
-import com.ociweb.pronghorn.ring.FieldReferenceOffsetManager;
-import com.ociweb.pronghorn.ring.RingBuffer;
-import com.ociweb.pronghorn.ring.RingBufferConfig;
+import com.ociweb.pronghorn.pipe.FieldReferenceOffsetManager;
+import com.ociweb.pronghorn.pipe.Pipe;
+import com.ociweb.pronghorn.pipe.PipeConfig;
 import com.ociweb.pronghorn.stage.scheduling.GraphManager;
 import com.ociweb.pronghorn.stage.scheduling.ThreadPerStageScheduler;
 
 public class BZip2DecompressionStageTest {
 		
 		final Logger logger = LoggerFactory.getLogger(BZip2DecompressionStageTest.class);
-		private final RingBufferConfig config = new RingBufferConfig(FieldReferenceOffsetManager.RAW_BYTES, 100, 4096);
+		private final PipeConfig config = new PipeConfig(FieldReferenceOffsetManager.RAW_BYTES, 100, 4096);
 
 	    @Test
 	    public void verifyInstantiation() {
 	        
 	        GraphManager manager = new GraphManager();
 
-    		RingBuffer input = new RingBuffer(config);
-    		RingBuffer output = new RingBuffer(config);
+    		Pipe input = new Pipe(config);
+    		Pipe output = new Pipe(config);
 	        	
        		BZip2DecompressionStage stage = new BZip2DecompressionStage(manager, input, output);
 	    }
@@ -40,10 +40,10 @@ public class BZip2DecompressionStageTest {
 
 	    	GraphManager manager = new GraphManager();
 
-    		RingBuffer[] rings = new RingBuffer[] { 
-    			  new RingBuffer(config)	// input to compression stage
-    			, new RingBuffer(config)	// output for compression stage, input for decompression stage
-    			, new RingBuffer(config) 	// output for decompression stage, input for dumper.
+    		Pipe[] rings = new Pipe[] { 
+    			  new Pipe(config)	// input to compression stage
+    			, new Pipe(config)	// output for compression stage, input for decompression stage
+    			, new Pipe(config) 	// output for decompression stage, input for dumper.
     		};
 
     		Generator generator = new Generator(manager, rings[0], 100);

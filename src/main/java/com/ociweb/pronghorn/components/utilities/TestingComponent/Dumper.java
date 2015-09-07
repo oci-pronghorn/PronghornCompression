@@ -1,7 +1,7 @@
 package com.ociweb.pronghorn.components.utilities.TestingComponent;
 
-import com.ociweb.pronghorn.ring.RingBuffer;
-import com.ociweb.pronghorn.ring.stream.RingInputStream;
+import com.ociweb.pronghorn.pipe.Pipe;
+import com.ociweb.pronghorn.pipe.stream.RingInputStream;
 import com.ociweb.pronghorn.stage.PronghornStage;
 import com.ociweb.pronghorn.stage.scheduling.GraphManager;
 
@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 public class Dumper extends PronghornStage {
 
-	private RingBuffer inputBuffer;
+	private Pipe inputBuffer;
 	private RingInputStream input;
 
 	private ByteArrayOutputStream output;
@@ -22,7 +22,7 @@ public class Dumper extends PronghornStage {
     private final Logger logger = LoggerFactory.getLogger(Dumper.class);
 
 
-	public Dumper(GraphManager manager, RingBuffer inputBuffer) {
+	public Dumper(GraphManager manager, Pipe inputBuffer) {
 		super(manager, inputBuffer, NONE);
 
 		this.inputBuffer = inputBuffer;

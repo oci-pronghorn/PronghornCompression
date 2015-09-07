@@ -16,25 +16,25 @@ import org.slf4j.LoggerFactory;
 import com.ociweb.pronghorn.components.compression.XZCompressionComponent.XZCompressionStage;
 import com.ociweb.pronghorn.components.utilities.TestingComponent.Dumper;
 import com.ociweb.pronghorn.components.utilities.TestingComponent.Generator;
-import com.ociweb.pronghorn.ring.FieldReferenceOffsetManager;
-import com.ociweb.pronghorn.ring.RingBuffer;
-import com.ociweb.pronghorn.ring.RingBufferConfig;
-import com.ociweb.pronghorn.ring.stream.RingStreams;
+import com.ociweb.pronghorn.pipe.FieldReferenceOffsetManager;
+import com.ociweb.pronghorn.pipe.Pipe;
+import com.ociweb.pronghorn.pipe.PipeConfig;
+import com.ociweb.pronghorn.pipe.stream.RingStreams;
 import com.ociweb.pronghorn.stage.scheduling.GraphManager;
 import com.ociweb.pronghorn.stage.scheduling.ThreadPerStageScheduler;
 
 public class XZCompressionStageTest {
 
 		private final Logger logger = LoggerFactory.getLogger(XZCompressionStageTest.class);
-		private final RingBufferConfig config = new RingBufferConfig(FieldReferenceOffsetManager.RAW_BYTES);
+		private final PipeConfig config = new PipeConfig(FieldReferenceOffsetManager.RAW_BYTES);
 
 	    @Test
 	    public void verifyInstantiation() {
 	        
 	        GraphManager manager = new GraphManager();
 
-	    	RingBuffer input = new RingBuffer(config);
-	    	RingBuffer output = new RingBuffer(config);
+	    	Pipe input = new Pipe(config);
+	    	Pipe output = new Pipe(config);
 	        	
 	       	XZCompressionStage stage = new XZCompressionStage(manager, input, output);
 	    }
@@ -45,8 +45,8 @@ public class XZCompressionStageTest {
 	    	
 	    	GraphManager manager = new GraphManager();
 
-	    	RingBuffer input = new RingBuffer(config);
-	    	RingBuffer output = new RingBuffer(config);
+	    	Pipe input = new Pipe(config);
+	    	Pipe output = new Pipe(config);
 	        
 	       	XZCompressionStage stage = new XZCompressionStage(manager, input, output);
 	       	Dumper dumper = new Dumper(manager, output);
@@ -80,8 +80,8 @@ public class XZCompressionStageTest {
 	    	try {
 	    		GraphManager manager = new GraphManager();
 
-	    		RingBuffer input = new RingBuffer(config);
-	    		RingBuffer output = new RingBuffer(config);
+	    		Pipe input = new Pipe(config);
+	    		Pipe output = new Pipe(config);
 
 
 	    		Generator generator = new Generator(manager, input, 100);

@@ -8,18 +8,18 @@ import org.apache.commons.compress.compressors.gzip.GzipParameters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ociweb.pronghorn.ring.RingBuffer;
-import com.ociweb.pronghorn.ring.stream.RingInputStream;
-import com.ociweb.pronghorn.ring.stream.RingOutputStream;
+import com.ociweb.pronghorn.pipe.Pipe;
+import com.ociweb.pronghorn.pipe.stream.RingInputStream;
+import com.ociweb.pronghorn.pipe.stream.RingOutputStream;
 import com.ociweb.pronghorn.stage.PronghornStage;
 import com.ociweb.pronghorn.stage.scheduling.GraphManager;
 
 public class GzipCompressionStage extends PronghornStage {
 
-    private RingBuffer inputBuffer; 
+    private Pipe inputBuffer; 
     private RingInputStream input;
 
-    private RingBuffer outputBuffer;
+    private Pipe outputBuffer;
     private GzipCompressorOutputStream output;
     
     private byte[] data = new byte[4096];
@@ -27,11 +27,11 @@ public class GzipCompressionStage extends PronghornStage {
 
 	private final Logger logger = LoggerFactory.getLogger(GzipCompressionStage.class);
     
-	public GzipCompressionStage(GraphManager manager, RingBuffer inputRing, RingBuffer outputRing) {
+	public GzipCompressionStage(GraphManager manager, Pipe inputRing, Pipe outputRing) {
 		this(manager, inputRing, outputRing, 0);
 	}
 
-	public GzipCompressionStage(GraphManager manager, RingBuffer inputRing, RingBuffer outputRing, int compressionLevel) {
+	public GzipCompressionStage(GraphManager manager, Pipe inputRing, Pipe outputRing, int compressionLevel) {
 		super(manager, inputRing, outputRing);
 
 		this.inputBuffer = inputRing;

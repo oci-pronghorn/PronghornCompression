@@ -2,9 +2,9 @@ package com.ociweb.pronghorn.components.utilities;
 
 import com.ociweb.pronghorn.components.utilities.TestingComponent.Dumper;
 import com.ociweb.pronghorn.components.utilities.TestingComponent.Generator;
-import com.ociweb.pronghorn.ring.FieldReferenceOffsetManager;
-import com.ociweb.pronghorn.ring.RingBuffer;
-import com.ociweb.pronghorn.ring.RingBufferConfig;
+import com.ociweb.pronghorn.pipe.FieldReferenceOffsetManager;
+import com.ociweb.pronghorn.pipe.Pipe;
+import com.ociweb.pronghorn.pipe.PipeConfig;
 import com.ociweb.pronghorn.stage.scheduling.GraphManager;
 import com.ociweb.pronghorn.stage.scheduling.ThreadPerStageScheduler;
 
@@ -18,13 +18,13 @@ import static org.junit.Assert.assertEquals;
 
 public class GeneratorTest {
 
-    private final RingBufferConfig config = new RingBufferConfig((byte) 4,(byte) 18, null, FieldReferenceOffsetManager.RAW_BYTES);
+    private final PipeConfig config = new PipeConfig((byte) 4,(byte) 18, null, FieldReferenceOffsetManager.RAW_BYTES);
 
     @Test 
     public void verifyGeneratorInstantiation() {
         GraphManager manager = new GraphManager();
 
-        RingBuffer buffer = new RingBuffer(config);
+        Pipe buffer = new Pipe(config);
         Generator generator = new Generator(manager, buffer, 100);
     }
 
@@ -32,7 +32,7 @@ public class GeneratorTest {
     public void verifyGeneratorStopsAfterNumberOfArrays() {
         GraphManager manager = new GraphManager();
 
-        RingBuffer buffer = new RingBuffer(config);
+        Pipe buffer = new Pipe(config);
         Generator generator = new Generator(manager, buffer, 100);
         Dumper dumper = new Dumper(manager, buffer);
 
