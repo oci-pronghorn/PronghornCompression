@@ -51,7 +51,7 @@ public class BZip2DecompressionStageTest {
     		BZip2DecompressionStage decompressor = new BZip2DecompressionStage(manager, rings[1], rings[2]);
     		Dumper dumper = new Dumper(manager, rings[2]);
 
-    		GraphManager.addAnnotation(manager, GraphManager.PRODUCER, GraphManager.PRODUCER, generator);
+    		GraphManager.addNota(manager, GraphManager.PRODUCER, GraphManager.PRODUCER, generator);
     		
     		ThreadPerStageScheduler service = new ThreadPerStageScheduler(manager);
     		service.startup();
