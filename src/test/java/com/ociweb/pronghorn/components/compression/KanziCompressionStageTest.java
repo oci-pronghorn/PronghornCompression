@@ -20,6 +20,7 @@ import com.ociweb.pronghorn.components.utilities.TestingComponent.Generator;
 import com.ociweb.pronghorn.pipe.FieldReferenceOffsetManager;
 import com.ociweb.pronghorn.pipe.Pipe;
 import com.ociweb.pronghorn.pipe.PipeConfig;
+import com.ociweb.pronghorn.pipe.RawDataSchema;
 import com.ociweb.pronghorn.pipe.stream.RingStreams;
 import com.ociweb.pronghorn.stage.scheduling.GraphManager;
 import com.ociweb.pronghorn.stage.scheduling.ThreadPerStageScheduler;
@@ -27,7 +28,7 @@ import com.ociweb.pronghorn.stage.scheduling.ThreadPerStageScheduler;
 public class KanziCompressionStageTest {
 
 		private final Logger logger = LoggerFactory.getLogger(KanziCompressionStageTest.class);
-		private final PipeConfig config = new PipeConfig(FieldReferenceOffsetManager.RAW_BYTES, 50, 4096);
+		private final PipeConfig config = new PipeConfig(RawDataSchema.instance, 50, 4096);
 
 	    private final String codecs[] = new String[] {"PAQ", "FPAQ", "ANS", "HUFFMAN", "RANGE", "NONE"};
         private final String transforms[] = new String[] {"BWT", "BWTS", "SNAPPY", "LZ4", "RLT", "BWT+MTF", "BWT+TIMESTAMP", "NONE"};

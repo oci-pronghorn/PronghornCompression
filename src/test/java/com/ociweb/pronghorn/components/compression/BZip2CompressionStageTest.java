@@ -19,6 +19,7 @@ import com.ociweb.pronghorn.components.utilities.TestingComponent.Generator;
 import com.ociweb.pronghorn.pipe.FieldReferenceOffsetManager;
 import com.ociweb.pronghorn.pipe.Pipe;
 import com.ociweb.pronghorn.pipe.PipeConfig;
+import com.ociweb.pronghorn.pipe.RawDataSchema;
 import com.ociweb.pronghorn.pipe.stream.RingStreams;
 import com.ociweb.pronghorn.stage.scheduling.GraphManager;
 import com.ociweb.pronghorn.stage.scheduling.ThreadPerStageScheduler;
@@ -28,7 +29,7 @@ public class BZip2CompressionStageTest {
 		private final int compressionBlockSize = 2;
 		
 		private final Logger logger = LoggerFactory.getLogger(BZip2CompressionStageTest.class);
-		private final PipeConfig config = new PipeConfig(FieldReferenceOffsetManager.RAW_BYTES);
+		private final PipeConfig config = new PipeConfig(RawDataSchema.instance);
 
 	    @Test
 	    public void verifyInstantiation() {

@@ -16,13 +16,14 @@ import com.ociweb.pronghorn.components.utilities.TestingComponent.Generator;
 import com.ociweb.pronghorn.pipe.FieldReferenceOffsetManager;
 import com.ociweb.pronghorn.pipe.Pipe;
 import com.ociweb.pronghorn.pipe.PipeConfig;
+import com.ociweb.pronghorn.pipe.RawDataSchema;
 import com.ociweb.pronghorn.stage.scheduling.GraphManager;
 import com.ociweb.pronghorn.stage.scheduling.ThreadPerStageScheduler;
 
 public class BZip2DecompressionStageTest {
 		
 		final Logger logger = LoggerFactory.getLogger(BZip2DecompressionStageTest.class);
-		private final PipeConfig config = new PipeConfig(FieldReferenceOffsetManager.RAW_BYTES, 100, 4096);
+		private final PipeConfig config = new PipeConfig(RawDataSchema.instance, 100, 4096);
 
 	    @Test
 	    public void verifyInstantiation() {

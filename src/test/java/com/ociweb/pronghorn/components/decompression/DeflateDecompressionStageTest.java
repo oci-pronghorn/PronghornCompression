@@ -7,6 +7,7 @@ import com.ociweb.pronghorn.components.utilities.TestingComponent.Generator;
 import com.ociweb.pronghorn.pipe.FieldReferenceOffsetManager;
 import com.ociweb.pronghorn.pipe.Pipe;
 import com.ociweb.pronghorn.pipe.PipeConfig;
+import com.ociweb.pronghorn.pipe.RawDataSchema;
 import com.ociweb.pronghorn.pipe.stream.RingOutputStream;
 import com.ociweb.pronghorn.stage.scheduling.GraphManager;
 import com.ociweb.pronghorn.stage.scheduling.ThreadPerStageScheduler;
@@ -32,7 +33,7 @@ import org.slf4j.LoggerFactory;
 public class DeflateDecompressionStageTest {
 		
 		private final Logger logger = LoggerFactory.getLogger(DeflateDecompressionStageTest.class);
-		private final PipeConfig config = new PipeConfig(FieldReferenceOffsetManager.RAW_BYTES);
+		private final PipeConfig config = new PipeConfig(RawDataSchema.instance);
 
 	    @Test
 	    public void verifyInstantiation() {

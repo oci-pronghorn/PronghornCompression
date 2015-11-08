@@ -5,6 +5,7 @@ import com.ociweb.pronghorn.components.utilities.TestingComponent.Generator;
 import com.ociweb.pronghorn.pipe.FieldReferenceOffsetManager;
 import com.ociweb.pronghorn.pipe.Pipe;
 import com.ociweb.pronghorn.pipe.PipeConfig;
+import com.ociweb.pronghorn.pipe.RawDataSchema;
 import com.ociweb.pronghorn.stage.scheduling.GraphManager;
 import com.ociweb.pronghorn.stage.scheduling.ThreadPerStageScheduler;
 
@@ -18,7 +19,7 @@ import static org.junit.Assert.assertEquals;
 
 public class GeneratorTest {
 
-    private final PipeConfig config = new PipeConfig((byte) 4,(byte) 18, null, FieldReferenceOffsetManager.RAW_BYTES);
+    private final PipeConfig config = new PipeConfig((byte) 4,(byte) 18, null, RawDataSchema.instance);
 
     @Test 
     public void verifyGeneratorInstantiation() {

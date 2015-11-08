@@ -17,6 +17,7 @@ import com.ociweb.pronghorn.components.utilities.TestingComponent.Generator;
 import com.ociweb.pronghorn.pipe.FieldReferenceOffsetManager;
 import com.ociweb.pronghorn.pipe.Pipe;
 import com.ociweb.pronghorn.pipe.PipeConfig;
+import com.ociweb.pronghorn.pipe.RawDataSchema;
 import com.ociweb.pronghorn.stage.scheduling.GraphManager;
 import com.ociweb.pronghorn.stage.scheduling.ThreadPerStageScheduler;
 
@@ -26,7 +27,7 @@ public class KanziDecompressionStageTest {
         private final String transforms[] = new String[] {"BWT", "BWTS", "SNAPPY", "LZ4", "RLT", "BWT+MTF", "BWT+TIMESTAMP", "NONE"};
 
 		private final Logger logger = LoggerFactory.getLogger(KanziDecompressionStageTest.class);
-		private final PipeConfig config = new PipeConfig(FieldReferenceOffsetManager.RAW_BYTES, 20, 4096);
+		private final PipeConfig config = new PipeConfig(RawDataSchema.instance, 20, 4096);
 
 	    @Test
 	    public void verifyInstantiation() {
